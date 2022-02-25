@@ -31,13 +31,13 @@ export default {
         ],
         //柱状图
         userData: [
-          { date: "周一", new: 5, active: 500 },
-          { date: "周二", new: 16, active: 300 },
-          { date: "周三", new: 20, active: 600 },
-          { date: "周四", new: 25, active: 700 },
-          { date: "周五", new: 3, active: 200 },
-          { date: "周六", new: 30, active: 900 },
-          { date: "周日", new: 28, active: 800 },
+          { date: "周一", new: 100, active: 500 },
+          { date: "周二", new: 80, active: 300 },
+          { date: "周三", new: 130, active: 600 },
+          { date: "周四", new: 200, active: 700 },
+          { date: "周五", new: 60, active: 200 },
+          { date: "周六", new: 260, active: 900 },
+          { date: "周日", new: 200, active: 800 },
         ],
         //折线图
         orderData: {

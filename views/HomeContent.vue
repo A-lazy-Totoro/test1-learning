@@ -56,11 +56,20 @@
           </div>
         </el-card>
       </div>
-      <el-card style="height: 280px"></el-card>
+      <el-card style="height: 280px">
+        <div style="height: 280px" ref="echarts"></div>
+      </el-card>
 
       <el-row :gutter="15">
-        <el-col :span="12"> <el-card style="height: 260px"></el-card> </el-col>
-        <el-col :span="12"><el-card style="height: 260px"></el-card></el-col>
+        <el-col :span="12">
+          <el-card style="height: 260px"
+            ><div style="height: 240px" ref="user"></div
+          ></el-card>
+        </el-col>
+        <el-col :span="12"
+          ><el-card style="height: 260px"
+            ><div style="height: 200px" ref="video"></div></el-card
+        ></el-col>
       </el-row>
     </el-col>
   </el-row>
@@ -69,6 +78,7 @@
 <script>
 /* import { getMenu } from "../api/data.js"; */
 import { getData } from "../api/data.js";
+import * as echarts from "echarts";
 export default {
   data() {
     return {
@@ -161,11 +171,86 @@ export default {
     /*  getMenu().then((res) => {
       console.log(res);
     }); */
+
     getData().then((res) => {
       const { code, data } = res.data;
       console.log(res);
+
       if (code === 20000) {
         this.tableData = data.tableData;
+        //待优化  图 复用部分
+        //折线图
+        const order = data.orderData;
+        //拿到数据中的key，作为图例的值
+        const keyArray = Object.keys(order.data[0]);
+        const series = [];
+        const xData = order.date;
+        keyArray.forEach((key) => {
+          series.push({
+            name: key,
+            data: order.data.map((item) => item[key]),
+            type: "line",
+          });
+        });
+
+        const option = {
+          xAxis: { data: xData },
+          yAxis: {},
+          legend: {
+            data: keyArray,
+          },
+          series,
+        };
+
+        const E = echarts.init(this.$refs.echarts);
+        E.setOption(option);
+
+        //柱状图：用户图
+        const userData = data.userData;
+        const userArray = [];
+        const userArrayNew = [];
+        const userArrayActive = [];
+        userData.forEach((key) => {
+          userArray.push(key.date);
+          userArrayNew.push(key.new);
+          userArrayActive.push(key.active);
+        });
+        const userOption = {
+          legend: {},
+          tooltip: {},
+          xAxis: {
+            data: userArray,
+          },
+          yAxis: {},
+          series: [
+            {
+              name: "new",
+              type: "bar",
+              data: userArrayNew,
+            },
+            {
+              name: "active",
+              type: "bar",
+              data: userArrayActive,
+            },
+          ],
+        };
+        const Euser = echarts.init(this.$refs.user);
+        Euser.setOption(userOption);
+
+        //饼图
+        const videoData = data.videoData;
+        const videoOption = {
+          tooltip: {},
+          series: [
+            {
+              type: "pie",
+              data: videoData,
+            },
+          ],
+        };
+        const Evideo = echarts.init(this.$refs.video);
+        Evideo.setOption(videoOption);
       }
     });
   },
