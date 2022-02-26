@@ -7,6 +7,7 @@
     <!-- Aside end -->
     <el-container>
       <el-header><header-node></header-node></el-header>
+      <tag-content/>
       <el-main><router-view /></el-main>
     </el-container>
   </el-container>
@@ -15,10 +16,12 @@
 <script>
 import AsideNode from "../src/components/AsideNode.vue";
 import HeaderNode from "../src/components/HeaderNode.vue";
+import TagContent from "../src/components/TagContent.vue"
 export default {
   components: {
     AsideNode,
     HeaderNode,
+    TagContent
   },
 };
 </script>

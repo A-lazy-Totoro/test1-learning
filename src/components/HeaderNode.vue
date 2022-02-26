@@ -3,7 +3,15 @@
     <el-button size="mini" @click="closeMenu">
       <el-icon><Menu /></el-icon>
     </el-button>
-    <h5>首页</h5>
+
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item
+        v-for="item in tag"
+        :key="item.name"
+        :to="{ path: item.path }"
+        >{{ item.label }}</el-breadcrumb-item
+      >
+    </el-breadcrumb>
   </div>
   <div class="r-content">
     <el-dropdown trigger="click" size="small">
@@ -21,6 +29,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { defineComponent } from "vue";
 import { Menu } from "@element-plus/icons-vue";
 export default defineComponent({
@@ -36,6 +45,11 @@ export default defineComponent({
     closeMenu() {
       this.$store.commit("collapseMenu");
     },
+  },
+  computed: {
+    ...mapState({
+      tag: (state) => state.tabMenuData,
+    }),
   },
 });
 </script>

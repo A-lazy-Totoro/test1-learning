@@ -23,6 +23,14 @@ export const router = createRouter({
           path: "/Setting",
           component: () => import("../views/SettingContent.vue"),
         },
+        {
+          path: "page1",
+          component: () => import("../views/Page1Content.vue"),
+        },
+        {
+          path: "page2",
+          component: () => import("../views/Page2Content.vue"),
+        },
       ],
     },
   ],
