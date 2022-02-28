@@ -16,3 +16,11 @@ export const getData = () => {
     url: "/home/getData",
   });
 };
+
+export const getUser = (parms) => {
+  return axios.request({
+    url: "/user/getUser",
+    method: "get",
+    parms,
+  });
+};
